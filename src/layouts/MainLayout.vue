@@ -729,7 +729,7 @@ const formInput = reactive({
 
 const accept = ref(false)
 // test verify
-const verify = ref(true)
+const verify = ref(false)
 const otpSuccess = ref(null)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
