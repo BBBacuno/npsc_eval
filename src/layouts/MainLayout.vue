@@ -6,6 +6,7 @@
         -moz-border-radius: 50px;
         border-radius: 50px;
       "
+      id="topElement"
     >
     <div v-show="!verify">
       <div v-show="!verify" class="input-forms">
@@ -50,7 +51,7 @@
         </div>
       </div>
     </div>
-    <div v-show="verify">
+    <div v-show="verify" id="parentContainer">
         <q-form @submit="submitResponse()">
           <div v-show="pageNum == 1">
             <p style="justify-content: center;">
@@ -547,7 +548,7 @@
                 <q-btn label="Back" @click="pageNum--"  color="teal" class="button-submit" style="width: 100%;"></q-btn>
               </div>
               <div v-show="pageNum < 11" style="width: 25%;  ">
-                <q-btn label="Next" @click="pageNum++" color="teal" class="button-submit" style="width: 100%; height: 12%"></q-btn>
+                <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit" style="width: 100%; height: 12%"></q-btn>
               </div>
             </div>
             <q-btn label="submit" type="submit" color="primary" class="button-submit"></q-btn>
@@ -728,7 +729,7 @@ const formInput = reactive({
 
 const accept = ref(false)
 // test verify
-const verify = ref(false)
+const verify = ref(true)
 const otpSuccess = ref(null)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
@@ -745,6 +746,12 @@ const refreshPage = () => {
   location.href = "/";
 };
 
+const scrollToElement = (el) => {
+  const myDiv = document.querySelector(el);
+  myDiv.scrollTo({top: 0, behavior: 'smooth'})
+}
+
+
 const sendOTP = () => {
   pleaseWait.value = true;
   axiosInit
@@ -756,9 +763,6 @@ const sendOTP = () => {
       } else if (response.data.success === true) {
         pleaseWait.value = false;
         verify.value = response.data.success;
-        formInput.fname = response.data.fname;
-        formInput.mname = response.data.mname;
-        formInput.lname = response.data.lname;
       } else {
         pleaseWait.value = false;
         errorWarning.value = true;
@@ -799,9 +803,8 @@ export default {
         })
     }
 
-    
-
     return {
+      scrollToElement,
       toFormData,
       submitResponse,
       sendOTP,
