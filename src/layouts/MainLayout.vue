@@ -43,11 +43,7 @@
             :disabled="!accept"
             style="width: 50%"
             @click="sendOTP()"
-          >
-            <q-tooltip class="bg-white text-primary"
-              >All Fields Required</q-tooltip
-            >
-          </q-btn>
+          />
         </div>
       </div>
     </div>
@@ -58,7 +54,17 @@
               <b>DIRECTIONS</b>: Using a 5-point Likert scale, please put a checkmark (✓) on the 
               appropriate column that represents the extent of your agreement to the following 
               statements about some quality dimensions of this activity. 
-              <br>1 for agree, 5 for disagree
+              <br><q-icon
+                style="color: rgba(57, 72, 171, 0.87)"
+                :name="smiley_icons[0]"
+                :size="isScreenMD"
+              /> for agree, 
+              <q-icon
+                style="color: rgba(57, 72, 171, 0.87)"
+                :name="smiley_icons[4]"
+                :size="isScreenMD"
+              /> for disagree.<br>
+              All fields required.
             </p>
             <q-separator />
             <br><br><b>{{ "Access and Facilities" }}</b>
@@ -197,7 +203,7 @@
                       color="indigo-7"
                     >
                       <q-icon
-                        style="color: rgba(165, 171, 57, 0.87)"
+                        style="color: rgb(93, 97, 10)"
                         :name="smiley_icons[val-1]"
                         :size="isScreenMD"
                       />
@@ -551,7 +557,29 @@
                 <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit" style="width: 100%; height: 12%"></q-btn>
               </div>
             </div>
-            <q-btn label="submit" type="submit" color="primary" class="button-submit"></q-btn>
+            <div class="button-container" style="width: 100%;">
+              <q-btn label="submit" type="submit" color="primary" class="button-submit" :disabled="
+                formInput.af.length < 6 ||
+                formInput.c.length < 5 ||
+                formInput.q.length < 6 ||
+                formInput.org.length < 7 ||
+                formInput.out.length < 6 ||
+                formInput.aspectrate.length < 8 ||
+                formInput.aspectcomment.length < 8 ||
+                formInput.cornelio.length < 6 ||
+                formInput.cangrejo.length < 6 ||
+                formInput.chua.length < 6 ||
+                formInput.bulante.length < 6 ||
+                formInput.five1 == null ||
+                formInput.five2 == null ||
+                formInput.five3 == null ||
+                formInput.five3comment == null ||
+                formInput.five4 == null ||
+                formInput.five5 == null ||
+                formInput.OTPEmail == null
+                "></q-btn>
+            </div>
+            <!--  v-show="pageNum == 11" -->
           </div>
       </q-form>
     </div>
